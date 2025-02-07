@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgb(230,230,230);
+            background: -moz-linear-gradient(164deg, rgba(230,230,230,1) 0%, rgba(235,244,8,1) 100%);
+            background: -webkit-linear-gradient(164deg, rgba(230,230,230,1) 0%, rgba(235,244,8,1) 100%);
+            background: linear-gradient(164deg, rgba(230,230,230,1) 0%, rgba(235,244,8,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e6e6e6",endColorstr="#ebf408",GradientType=1);
+        }
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 400px;
+        }
+        .scores {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .weapons {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .weapons button {
+            background: #ffb400;
+            border: none;
+            color: white;
+            font-size: 30px;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .weapons button:hover {
+            background: #e09e00;
+            transform: scale(1.1);
+        }
+        .details {
+            margin-top: 20px;
+        }
+        #result {
+            font-size: 20px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="scores">
+            <p>Computer: <span id="computer_score">0</span></p>
+            <p>You: <span id="user_score">0</span></p>
+        </div>
+        <div class="weapons">
+            <button onclick="checker('rock')"><i class="fa-solid fa-hand-back-fist"></i></button>
+            <button onclick="checker('paper')"><i class="fa-solid fa-hand"></i></button>
+            <button onclick="checker('scissors')"><i class="fa-solid fa-hand-scissors"></i></button>
+        </div>
+        <div class="details">
+            <p id="user_choice"></p>
+            <p id="comp_choice"></p>
+            <p id="result"></p>
+        </div>
+    </div>
+    <script>
+        let [computer_score, user_score] = [0, 0];
+        let result_ref = document.getElementById("result");
+        let choices_object = {
+            'rock': {'rock': 'draw', 'scissors': 'win', 'paper': 'lose'},
+            'scissors': {'rock': 'lose', 'scissors': 'draw', 'paper': 'win'},
+            'paper': {'rock': 'win', 'scissors': 'lose', 'paper': 'draw'}
+        };
+        function checker(input) {
+            let choices = ["rock", "paper", "scissors"];
+            let num = Math.floor(Math.random() * 3);
+            document.getElementById("comp_choice").innerHTML = `Computer chose <span>${choices[num].toUpperCase()}</span>`;
+            document.getElementById("user_choice").innerHTML = `You chose <span>${input.toUpperCase()}</span>`;
+            let computer_choice = choices[num];
+            switch (choices_object[input][computer_choice]) {
+                case 'win':
+                    result_ref.style.cssText = "background-color: #b3ffb3; color: #008000";
+                    result_ref.innerHTML = "YOU WIN";
+                    user_score++;
+                    break;
+                case 'lose':
+                    result_ref.style.cssText = "background-color: #ffb3b3; color: #ff0000";
+                    result_ref.innerHTML = "YOU LOSE";
+                    computer_score++;
+                    break;
+                default:
+                    result_ref.style.cssText = "background-color: #d3d3d3; color: #808080";
+                    result_ref.innerHTML = "DRAW";
+                    break;
+            }
+            document.getElementById("computer_score").innerHTML = computer_score;
+            document.getElementById("user_score").innerHTML = user_score;
+        }
+    </script>
+</body>
+</html>
